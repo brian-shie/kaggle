@@ -190,7 +190,7 @@ sns.barplot(x="Pclass", y="Survived", data=train);
 
 
     
-![png](output_8_0.png)
+![png](output/output_8_0.png)
     
 
 
@@ -205,7 +205,7 @@ sns.barplot(x="Sex", y="Survived", data=train);
 
 
     
-![png](output_11_0.png)
+![png](output/output/output_11_0.png)
     
 
 
@@ -216,7 +216,7 @@ sns.barplot(x="Embarked", y="Survived", data=train);
 
 
     
-![png](output_12_0.png)
+![png](output/output/output_12_0.png)
     
 
 
@@ -244,7 +244,7 @@ sns.barplot(x="Cabin", y="Survived", data=train);
 
 
     
-![png](output_17_0.png)
+![png](output/output_17_0.png)
     
 
 
@@ -267,7 +267,7 @@ sns.barplot(x= cabin_letters, y=train["Survived"]);
 
 
     
-![png](output_20_0.png)
+![png](output/output_20_0.png)
     
 
 
@@ -285,7 +285,7 @@ sns.barplot(x = train['Cabin_CEDB'], y = train["Survived"]);
 
 
     
-![png](output_22_0.png)
+![png](output/output_22_0.png)
     
 
 
@@ -308,7 +308,7 @@ sns.boxplot(x = train["Survived"], y = cabin_numbers);
 
 
     
-![png](output_25_0.png)
+![png](output/output_25_0.png)
     
 
 
@@ -409,7 +409,7 @@ sns.barplot(x = title, y = train["Survived"]);
 
 
     
-![png](output_35_0.png)
+![png](output/output_35_0.png)
     
 
 
@@ -463,7 +463,7 @@ sns.barplot(x = tickets, y = train["Survived"]);
 
 
     
-![png](output_41_0.png)
+![png](output/output_41_0.png)
     
 
 
@@ -491,7 +491,7 @@ sns.boxplot(x = train["Survived"], y = train['Age']);
 
 
     
-![png](output_46_0.png)
+![png](output/output_46_0.png)
     
 
 
@@ -506,7 +506,7 @@ sns.barplot(x = train['SibSp'], y = train["Survived"]);
 
 
     
-![png](output_49_0.png)
+![png](output/output_49_0.png)
     
 
 
@@ -520,7 +520,7 @@ sns.barplot(x = train['SibSp_1'], y = train["Survived"]);
 
 
     
-![png](output_51_0.png)
+![png](output/output_51_0.png)
     
 
 
@@ -533,7 +533,7 @@ sns.barplot(x = train['Parch'], y = train["Survived"]);
 
 
     
-![png](output_53_0.png)
+![png](output/output_53_0.png)
     
 
 
@@ -547,7 +547,7 @@ sns.barplot(x = np.logical_or(train['Parch'] == 1, train['Parch'] == 2), y = tra
 
 
     
-![png](output_55_0.png)
+![png](output/output_55_0.png)
     
 
 
@@ -560,7 +560,7 @@ sns.barplot(x = train['Parch_1_or_2'], y = train["Survived"]);
 
 
     
-![png](output_57_0.png)
+![png](output/output_57_0.png)
     
 
 
@@ -574,7 +574,7 @@ sns.barplot(x = train['Parch_SibSp_lt_4'], y = train["Survived"]);
 
 
     
-![png](output_59_0.png)
+![png](output/output_59_0.png)
     
 
 
@@ -587,7 +587,7 @@ sns.histplot(multiple = 'dodge', x = train['Fare'], hue = train["Survived"], bin
 
 
     
-![png](output_61_0.png)
+![png](output/output_61_0.png)
     
 
 
@@ -629,7 +629,7 @@ msno.matrix(train);
 
 
     
-![png](output_67_0.png)
+![png](output/output_67_0.png)
     
 
 
@@ -809,7 +809,7 @@ msno.matrix(test);
 
 
     
-![png](output_80_0.png)
+![png](output/output_80_0.png)
     
 
 
@@ -873,7 +873,7 @@ pd.DataFrame(outer_scores).plot();
 
 
     
-![png](output_89_0.png)
+![png](output/output_89_0.png)
     
 
 
