@@ -1,8 +1,15 @@
 # Introduction
+Here i will be doing, from start to finish, a machine learning project on the famous [Titanic Dataset](https://www.kaggle.com/c/titanic/overview). 
 
-### Competition: [Titanic Kaggle](https://www.kaggle.com/c/titanic/overview)
-
-This is notebook contains a simple data science project framework, for learning and portfolio construction purposes.
+This work will contain: 
+- Exploratory Data Analysis;
+- Data Visualization;
+- Feature Engineering;
+- Data Cleaning;
+- Clustering Algorithms (in progress);
+- Simple Modeling;
+- Hyperparameter Tuning (in progress);
+- Model Stacking (in progress);
 
 # Libs
 
