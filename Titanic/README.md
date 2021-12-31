@@ -10,6 +10,7 @@ This work will contain:
 - Simple Modeling;
 - Hyperparameter Tuning (in progress);
 - Model Stacking (in progress);
+- Class Imbalance treatment;
 
 # Libs
 
