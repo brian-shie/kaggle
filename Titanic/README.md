@@ -1,15 +1,8 @@
 # Introduction
-Here i will be doing, from start to finish, a machine learning project on the famous [Titanic Dataset](https://www.kaggle.com/c/titanic/overview). 
 
-This work will contain: 
-- Exploratory Data Analysis;
-- Data Visualization;
-- Feature Engineering;
-- Data Cleaning;
-- Clustering Algorithms (in progress);
-- Simple Modeling;
-- Hyperparameter Tuning (in progress);
-- Model Stacking (in progress);
+### Competition: [Titanic Kaggle](https://www.kaggle.com/c/titanic/overview)
+
+This is notebook contains a simple data science project framework, for learning and portfolio construction purposes.
 
 # Libs
 
@@ -42,6 +35,17 @@ from optuna.visualization import plot_contour, plot_edf, plot_intermediate_value
 from optuna.visualization import plot_parallel_coordinate, plot_param_importances, plot_slice
 ```
 
+### Models
+
+
+```python
+from sklearn.linear_model import LogisticRegression
+from sklearn.linear_model import ElasticNet
+from sklearn.svm import SVC
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import LinearRegression
+```
+
 # Load Dataset
 
 This step we simply get our data to our working environment. Because we are not dealing with live data, a simple pandas usage is enough.
@@ -54,8 +58,8 @@ train = pd.read_csv("data/train.csv")
 test = pd.read_csv("data/test.csv")
 ```
 
-    Wall time: 20 ms
-    
+    Wall time: 15.3 ms
+
 
 # Exploratory Data Analysis
 
@@ -189,9 +193,9 @@ sns.barplot(x="Pclass", y="Survived", data=train);
 ```
 
 
-    
-![png](output/output_8_0.png)
-    
+
+![png](output/output_10_0.png)
+
 
 
 Here we can see that Pclass is an important variable
@@ -204,9 +208,9 @@ sns.barplot(x="Sex", y="Survived", data=train);
 ```
 
 
-    
-![png](output/output/output_11_0.png)
-    
+
+![png](output/output_13_0.png)
+
 
 
 
@@ -215,9 +219,9 @@ sns.barplot(x="Embarked", y="Survived", data=train);
 ```
 
 
-    
-![png](output/output/output_12_0.png)
-    
+
+![png](output/output_14_0.png)
+
 
 
 We can see that the survival rate between females and males are most discrepant, and the *Embarked* variable has some effect as well.
@@ -243,9 +247,9 @@ sns.barplot(x="Cabin", y="Survived", data=train);
 ```
 
 
-    
-![png](output/output_17_0.png)
-    
+
+![png](output/output_19_0.png)
+
 
 
 We can't really use it this way, so let's change it a little:
@@ -266,9 +270,9 @@ sns.barplot(x= cabin_letters, y=train["Survived"]);
 ```
 
 
-    
-![png](output/output_20_0.png)
-    
+
+![png](output/output_22_0.png)
+
 
 
 Here we can see that the missing values don't really tell us anything, as it's mean is around the overall survival rate.
@@ -284,9 +288,9 @@ sns.barplot(x = train['Cabin_CEDB'], y = train["Survived"]);
 ```
 
 
-    
-![png](output/output_22_0.png)
-    
+
+![png](output/output_24_0.png)
+
 
 
 Is the cabin number important?
@@ -307,9 +311,9 @@ sns.boxplot(x = train["Survived"], y = cabin_numbers);
 ```
 
 
-    
-![png](output/output_25_0.png)
-    
+
+![png](output/output_27_0.png)
+
 
 
 With this we can conclude that the number is not relevant!
@@ -331,7 +335,7 @@ len(train['Name'].unique())
 
 
 
-Here we can see that every name here is unique, so we have to transform it a bit. 
+Here we can see that every name here is unique, so we have to transform it a bit.
 
 The hipothesis tested is that the title of each name is relevant to predict the survival rate.
 
@@ -343,7 +347,7 @@ print(len(title))
 ```
 
     891
-    
+
 
 
 ```python
@@ -352,7 +356,7 @@ np.unique(title)
 ```
 
     17
-    
+
 
 
 
@@ -377,16 +381,16 @@ pd.Series(title).value_counts()
     Master           40
     Dr                7
     Rev               6
-    Mlle              2
-    Major             2
     Col               2
-    Jonkheer          1
-    Sir               1
-    Ms                1
+    Major             2
+    Mlle              2
     Lady              1
-    Don               1
-    Capt              1
     the Countess      1
+    Don               1
+    Ms                1
+    Sir               1
+    Jonkheer          1
+    Capt              1
     Mme               1
     dtype: int64
 
@@ -408,9 +412,9 @@ sns.barplot(x = title, y = train["Survived"]);
 ```
 
 
-    
-![png](output/output_35_0.png)
-    
+
+![png](output/output_37_0.png)
+
 
 
 The *Mrs* title is relevant, however it is probably highly correlated with the *Sex* variable.
@@ -462,9 +466,9 @@ sns.barplot(x = tickets, y = train["Survived"]);
 ```
 
 
-    
-![png](output/output_41_0.png)
-    
+
+![png](output/output_43_0.png)
+
 
 
 We can conclude here that the letter in the ticket variable most likely has not any relevant information.
@@ -490,9 +494,9 @@ sns.boxplot(x = train["Survived"], y = train['Age']);
 ```
 
 
-    
-![png](output/output_46_0.png)
-    
+
+![png](output/output_48_0.png)
+
 
 
 It looks like the average age does not differ when comparing the survived and not survived people.
@@ -505,9 +509,9 @@ sns.barplot(x = train['SibSp'], y = train["Survived"]);
 ```
 
 
-    
-![png](output/output_49_0.png)
-    
+
+![png](output/output_51_0.png)
+
 
 
 Only when SibSp = 1 that we have a relevant information.
@@ -519,9 +523,9 @@ sns.barplot(x = train['SibSp_1'], y = train["Survived"]);
 ```
 
 
-    
-![png](output/output_51_0.png)
-    
+
+![png](output/output_53_0.png)
+
 
 
 ### Parch
@@ -532,9 +536,9 @@ sns.barplot(x = train['Parch'], y = train["Survived"]);
 ```
 
 
-    
-![png](output/output_53_0.png)
-    
+
+![png](output/output_55_0.png)
+
 
 
 We can have better predictions when Parch = 1 or 2
@@ -546,9 +550,9 @@ sns.barplot(x = np.logical_or(train['Parch'] == 1, train['Parch'] == 2), y = tra
 ```
 
 
-    
-![png](output/output_55_0.png)
-    
+
+![png](output/output_57_0.png)
+
 
 
 ### Parch + SibSp
@@ -559,9 +563,9 @@ sns.barplot(x = train['Parch_1_or_2'], y = train["Survived"]);
 ```
 
 
-    
-![png](output/output_57_0.png)
-    
+
+![png](output/output_59_0.png)
+
 
 
 Here we can see that from 4 Parch + SipSp, the survival rate decreases, so we will create a dummy variable for <4 relatives.
@@ -573,9 +577,9 @@ sns.barplot(x = train['Parch_SibSp_lt_4'], y = train["Survived"]);
 ```
 
 
-    
-![png](output/output_59_0.png)
-    
+
+![png](output/output_61_0.png)
+
 
 
 ### Fare
@@ -586,9 +590,9 @@ sns.histplot(multiple = 'dodge', x = train['Fare'], hue = train["Survived"], bin
 ```
 
 
-    
-![png](output/output_61_0.png)
-    
+
+![png](output/output_63_0.png)
+
 
 
 Higher fares -> higher survival rates
@@ -628,9 +632,9 @@ msno.matrix(train);
 ```
 
 
-    
-![png](output/output_67_0.png)
-    
+
+![png](output/output_69_0.png)
+
 
 
 We will use the mode value for the Embarked variable. As the Age variable will not be used, we will not treat it.
@@ -760,7 +764,6 @@ Here the KFold's k used will be two, se we can generalize more in this low sampl
 
 
 ```python
-from sklearn.linear_model import LogisticRegression
 log = LogisticRegression()
 
 kf = KFold(2, shuffle = True, random_state = 0)
@@ -776,7 +779,7 @@ print(np.mean(accuracy_scores))
 ```
 
     0.8237945281402731
-    
+
 
 # Applying all previous steps to the test dataset
 
@@ -808,9 +811,9 @@ msno.matrix(test);
 ```
 
 
-    
-![png](output/output_80_0.png)
-    
+
+![png](output/output_82_0.png)
+
 
 
 
@@ -852,17 +855,17 @@ from sklearn.metrics import accuracy_score
 
 kf = KFold(2, shuffle = True, random_state = 0)
 
-outer_scores = [] 
+outer_scores = []
 
 for i in range(0, 101):
     inner_scores = []
     for train_ix, test_ix in kf.split(train):
         log.fit(train.loc[train_ix, features], train.loc[train_ix, 'Survived'])
         preds = log.predict_proba(train.loc[test_ix, features])
-        
+
         inner_scores.append(metrics.accuracy_score((pd.DataFrame(preds)[0] < i/100).astype(int),
                            train.loc[test_ix, 'Survived']))
-    
+
     outer_scores.append(np.mean(inner_scores))    
 ```
 
@@ -872,9 +875,9 @@ pd.DataFrame(outer_scores).plot();
 ```
 
 
-    
-![png](output/output_89_0.png)
-    
+
+![png](output/output_91_0.png)
+
 
 
 
@@ -883,7 +886,7 @@ print(max(outer_scores), outer_scores.index(max(outer_scores)))
 ```
 
     0.8305310626291127 45
-    
+
 
 Here the max accuracy value occurs when the threshold value is equal to 0.46 with an validation accuracy of 83.05%.
 
@@ -898,42 +901,130 @@ submission.to_csv("data/submission.csv", index = False)
 
 Submitting this predictions gives us a score of 77.511%, better than our initial submission.
 
+# Clustering
+Something that often helps when trying to maximize your prediction scores, is using a cluster variable.
+
+
+```python
+from sklearn.cluster import KMeans
+
+outer_scores = []
+for i in range(1, 10, 1):
+    kf = KFold(2, shuffle = True, random_state = 0)
+
+    kmeans = KMeans(n_clusters = i, random_state = 0)
+    kmeans.fit(train[features])
+
+    train_cluster = pd.DataFrame(kmeans.labels_, columns = ['cluster'])
+    train_cluster = pd.get_dummies(train_cluster.astype(str))
+
+    temp_features = pd.DataFrame(pd.concat([train[features], train_cluster], axis = 1))
+
+    accuracy_scores = []
+    for train_ix, test_ix in kf.split(temp_features):
+        log.fit(temp_features.loc[train_ix], train.loc[train_ix, 'Survived'])
+        preds = log.predict(temp_features.loc[test_ix])
+
+        accuracy_scores.append(metrics.accuracy_score(train.loc[test_ix, 'Survived'], preds))
+
+    outer_scores.append(np.mean(accuracy_scores))
+```
+
+
+```python
+pd.DataFrame(outer_scores).plot();
+```
+
+
+
+![png](output/output_98_0.png)
+
+
+
+
+```python
+print(max(outer_scores), outer_scores.index(max(outer_scores)))
+```
+
+    0.8282863908903109 2
+
+
+This means that we can have better predictions when incluting clusters variables in the model.
+
+Here, a k = 2 in the KMeans algorithmn gives us a performance of 82.83%. Better than our previous model.
+
+
+```python
+kmeans = KMeans(n_clusters = 2, random_state = 0)
+kmeans.fit(train[features])
+
+train_cluster = pd.DataFrame(kmeans.labels_, columns = ['cluster'])
+train_cluster = pd.get_dummies(train_cluster.astype(str))
+
+test_cluster = pd.DataFrame(kmeans.predict(test[features]), columns = ['cluster'])
+test_cluster = pd.get_dummies(test_cluster.astype(str))
+
+train = pd.DataFrame(pd.concat([train, train_cluster], axis = 1))
+test = pd.DataFrame(pd.concat([test, test_cluster], axis = 1))
+
+features = [f for f in train.columns if f not in ['Survived', 'PassengerId']]
+```
+
 # Finding a better model
 After treating our data and feature engineering, the focus now is getting a better model. We can start using several models without too much tuning to discover which ones are the most promising, then we work on those ones. The 0.5 threshold will be used initially as some models return different concepts when using the *predict_proba* method.
 
-- LogisticRegression: 82.38%;
+## Linear Regression
+
+
+```python
+log = LinearRegression()
+
+kf = KFold(2, shuffle = True, random_state = 0)
+
+accuracy_scores = []
+for train_ix, test_ix in kf.split(train):
+    log.fit(train.loc[train_ix, features], train.loc[train_ix, 'Survived'])
+    preds = log.predict(train.loc[test_ix, features])
+    preds = (preds > 0.5).astype(int)
+
+    accuracy_scores.append(metrics.accuracy_score(train.loc[test_ix, 'Survived'], preds))
+
+print(np.mean(accuracy_scores))
+```
+
+    0.8294099863959289
+
 
 ## RandomForestClassifier
 
 
 ```python
-from sklearn.ensemble import RandomForestClassifier
 optuna.logging.set_verbosity(optuna.logging.WARNING)
 
 def objective(trial):
-    
+
     model = RandomForestClassifier(
         n_estimators = trial.suggest_int('n_estimators', 10, 250),
         max_depth = trial.suggest_int('max_depth', 3, 12),
         max_features = trial.suggest_int('max_features', 1, 17),
         random_state = 0
     )
-    
+
     kf = KFold(2, shuffle = True, random_state = 0)
     kf.split(train)
-    
+
     accuracy_scores = []
-    
+
     for train_ix, test_ix in kf.split(train):
         model.fit(train.loc[train_ix, features], train.loc[train_ix, 'Survived'])
         preds = model.predict_proba(train.loc[test_ix, features])[:,0]
         preds = (pd.DataFrame(preds) < 0.46).astype(int)
-        
-        
+
+
         accuracy_scores.append(metrics.accuracy_score(train.loc[test_ix, 'Survived'], preds))
-        
+
     return np.mean(accuracy_scores)
-    
+
 
 # 3. Create a study object and optimize the objective function.
 
@@ -943,43 +1034,45 @@ study.optimize(objective, n_trials=250)
 
 
 ```python
-study.best_trial.values
+print(study.best_trial.values)
+study.best_params
 ```
 
+    [0.8428654204665693]
 
 
 
-    [0.8406207487277675]
 
 
+    {'n_estimators': 162, 'max_depth': 7, 'max_features': 8}
 
-- LogisticRegression: 82.38%;
-- RandomForestClassifier: 84.06%;
+
 
 ## SVC
 
 
 ```python
-from sklearn.svm import SVC
-
 def objective(trial):
-    
-    model = SVC(C = trial.suggest_float('C', 1e-6, 10))
-    
+
+    model = SVC(
+        C = trial.suggest_float('C', 1e-6, 10),
+        kernel = trial.suggest_categorical('kernel', ['linear', 'poly', 'rbf', 'sigmoid'])
+    )
+
     kf = KFold(2, shuffle = True, random_state = 0)
     kf.split(train)
-    
+
     accuracy_scores = []
-    
+
     for train_ix, test_ix in kf.split(train):
         model.fit(train.loc[train_ix, features], train.loc[train_ix, 'Survived'])
         preds = model.predict(train.loc[test_ix, features])
-        
+
         accuracy_scores.append(metrics.accuracy_score(train.loc[test_ix, 'Survived'], preds))
-        
+
     return np.mean(accuracy_scores)
-    
-    
+
+
 # 3. Create a study object and optimize the objective function.
 
 study = optuna.create_study(direction='maximize')
@@ -988,48 +1081,47 @@ study.optimize(objective, n_trials=250)
 
 
 ```python
-study.best_trial.values
+print(study.best_trial.values)
+study.best_params
 ```
 
+    [0.8282838716178768]
 
 
 
-    [0.8249206429183252]
 
 
+    {'C': 4.138082523204997, 'kernel': 'linear'}
 
-- LogisticRegression: 82.38%;
-- RandomForestClassifier: 84.06%;
-- SVC: 82.49%;
+
 
 ## ElasticNet
 
 
 ```python
-from sklearn.linear_model import ElasticNet
-
 def objective(trial):
-    
+
     model = ElasticNet(
         alpha = trial.suggest_float('alpha', 1e-6, 10),
-        l1_ratio = trial.suggest_float('l1_ratio', 1e-6, 1)
+        l1_ratio = trial.suggest_float('l1_ratio', 1e-6, 1),
+        max_iter = 100000
     )
-    
+
     kf = KFold(2, shuffle = True, random_state = 0)
     kf.split(train)
-    
+
     accuracy_scores = []
-    
+
     for train_ix, test_ix in kf.split(train):
         model.fit(train.loc[train_ix, features], train.loc[train_ix, 'Survived'])
         preds = model.predict(train.loc[test_ix, features])
         preds = (pd.DataFrame(preds) > 0.5).astype(int)
-        
+
         accuracy_scores.append(metrics.accuracy_score(train.loc[test_ix, 'Survived'], preds))
-        
+
     return np.mean(accuracy_scores)
-    
-    
+
+
 # 3. Create a study object and optimize the objective function.
 
 study = optuna.create_study(direction='maximize')
@@ -1038,158 +1130,110 @@ study.optimize(objective, n_trials=250)
 
 
 ```python
-study.best_trial.values
+print(study.best_trial.values)
+study.best_params
 ```
 
+    [0.8338993298735324]
 
 
 
-    [0.8327782536403486]
 
 
+    {'alpha': 0.0010418893237364986, 'l1_ratio': 0.8839692506476324}
+
+
+
+### Initial Results
 
 - LogisticRegression: 82.38%;
-- RandomForestClassifier: 84.06%;
-- SVC: 82.49%;
+- LinearRegression: 82.94%;
+- RandomForestClassifier: 84.18%;
+- SVC: 82.83%;
 - ElasticNet: 83.28%;
 
-
-```python
-$ jupyter nbconvert Titanic.ipynb --to markdown --output output.md
-```
-
-    '$' is not recognized as an internal or external command,
-    operable program or batch file.
-    
+# Model Averaging
+Using the labels predictions.
 
 
 ```python
-
-```
-
-
-```python
-
+log = LogisticRegression()
+lm = LinearRegression()
+rf = RandomForestClassifier(n_estimators = 234, max_depth = 7, max_features = 9)
+svc = SVC(C = 0.4392210545263198, kernel = 'linear')
+en = ElasticNet(alpha = 0.00581196173367679, l1_ratio = 0.11705849757776753, random_state = 0)
 ```
 
 
 ```python
+th = 0.5
+predictions = pd.DataFrame(train['Survived'].copy())
+predictions['log'] = np.nan
+predictions['lm'] = np.nan
+predictions['rf'] = np.nan
+predictions['svc'] = np.nan
+predictions['en'] = np.nan
 
+for fold1, fold2 in kf.split(train):
+    log.fit(train.loc[fold1, features], train.loc[fold1, 'Survived'])
+    lm.fit(train.loc[fold1, features], train.loc[fold1, 'Survived'])
+    rf.fit(train.loc[fold1, features], train.loc[fold1, 'Survived'])
+    svc.fit(train.loc[fold1, features], train.loc[fold1, 'Survived'])
+    en.fit(train.loc[fold1, features], train.loc[fold1, 'Survived'])
+
+    predictions.loc[fold2,'log'] = log.predict_proba(train.loc[fold2, features])[:,1] > th
+    predictions.loc[fold2,'lm'] = lm.predict(train.loc[fold2, features]) > th
+    predictions.loc[fold2,'rf'] = rf.predict_proba(train.loc[fold2, features])[:,1] > th
+    predictions.loc[fold2,'svc'] = svc.predict(train.loc[fold2, features])
+    predictions.loc[fold2,'en'] = en.predict(train.loc[fold2, features]) > th
+
+metrics.accuracy_score(train['Survived'], predictions.iloc[:,1:6].apply(sum, axis = 1) > 2.5)
+```
+
+
+
+
+    0.8338945005611672
+
+
+
+
+```python
+th = 0.5
+test_predictions = pd.DataFrame(test['PassengerId'])
+
+test_predictions['log'] = log.predict_proba(test[features])[:,1] > th
+test_predictions['lm'] = lm.predict(test[features]) > th
+test_predictions['rf'] = rf.predict_proba(test[features])[:,1] > th
+test_predictions['svc'] = svc.predict(test[features])
+test_predictions['en'] = en.predict(test[features]) > th
 ```
 
 
 ```python
-
+submission = pd.read_csv('data/submission.csv')
+submission['Survived'] = (test_predictions.iloc[:,1:6].apply(sum, axis = 1) > 2.5).astype(int) # 0.77751
+submission.to_csv("data/submission.csv", index = False)
 ```
+
+Test submission accuracy scores:
 
 
 ```python
+submission['Survived'] = (log.predict_proba(test[features])[:,1] > th).astype(int) # 0.76794
+submission['Survived'] = (lm.predict(test[features]) > th).astype(int) # 0.77511
+submission['Survived'] = (rf.predict_proba(test[features])[:,1] > th).astype(int) # 0.75119
+submission['Survived'] = svc.predict(test[features]) # 0.76794
+submission['Survived'] = (en.predict(test[features]) > th).astype(int) # 0.77751
 
+submission.to_csv("data/submission.csv", index = False)
 ```
 
+# Results
+Here we found out that the cluster variable only made our models overfit, as all the models were worse than our previously logistic regression.
 
-```python
+*Ceteris paribus*, we can see that the model averaging gtt us better results than most single models with a score of 77.75%, only matched with the ElasticNet performance.
 
-```
+If this were a real competition, some steps to possibly increase our best score of **79.425%** would be to: revert the clustering variables creation and try to better out model with ensembling more models, more hyperparameters tuning, a multi-level stacking, etc.
 
-
-```python
-
-```
-
-
-```python
-
-```
-
-
-```python
-
-```
-
-
-```python
-
-```
-
-
-```python
-
-```
-
-
-```python
-
-```
-
-
-```python
-
-```
-
-
-```python
-
-```
-
-
-```python
-
-```
-
-# Clustering variable
-
-
-```python
-from sklearn.cluster import KMeans, DBSCAN
-
-best_k = float('inf')
-
-inertia_values = []
-for k in range(2, 20):
-    kmeans = KMeans(n_clusters = k, n_init = 100, max_iter = 500, copy_x = False)
-    kmeans.fit(train[features])
-    
-    if k < best_k:
-        best_k = k
-    
-    inertia_values.append(kmeans.inertia_)
-    print("k: ", k , " Inertia: ", kmeans.inertia_)
-```
-
-    k:  2  Inertia:  5466.229288766526
-    k:  3  Inertia:  4521.282674654894
-    k:  4  Inertia:  4076.124018557896
-    k:  5  Inertia:  3711.377256206933
-    k:  6  Inertia:  3373.344400666795
-    k:  7  Inertia:  3124.243299073304
-    k:  8  Inertia:  2928.3450623741946
-    k:  9  Inertia:  2758.049769098987
-    k:  10  Inertia:  2634.961669599222
-    k:  11  Inertia:  2517.689194643763
-    k:  12  Inertia:  2395.8423453577175
-    k:  13  Inertia:  2294.468760589003
-    k:  14  Inertia:  2195.991982714791
-    k:  15  Inertia:  2107.976114324885
-    k:  16  Inertia:  2040.056371527247
-    k:  17  Inertia:  1978.1699204810755
-    k:  18  Inertia:  1932.668366946803
-    k:  19  Inertia:  1876.0697010800227
-    
-
-
-```python
-plt.plot(range(2, 20), inertia_values); # K = 3
-```
-
-
-    ---------------------------------------------------------------------------
-
-    NameError                                 Traceback (most recent call last)
-
-    <ipython-input-152-0e0f153ab9cc> in <module>
-    ----> 1 plt.plot(range(2, 20), inertia_values); # K = 3
-    
-
-    NameError: name 'inertia_values' is not defined
-
+As every modeling problem, we have a *time x marginal gains* tradeoff. In this notebook our focus is mainly on developing from scratch a typical data science problem, so we will not try to maximize the accuracy score here.
